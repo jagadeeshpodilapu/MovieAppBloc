@@ -1,40 +1,38 @@
-import 'package:dartz/dartz.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:movieapp/domain/entities/app_error.dart';
-import 'package:movieapp/domain/entities/movie_entity.dart';
-import 'package:movieapp/domain/entities/no_params.dart';
-import 'package:movieapp/usecases/get_trending.dart';
+import 'package:flutter/services.dart';
+import 'package:movieapp/presentation/journey/home_screen.dart';
+import 'package:movieapp/presentation/themes/app_color.dart';
+import 'package:movieapp/presentation/themes/theme_text.dart';
 import 'package:pedantic/pedantic.dart';
 
 import 'di/get_it.dart' as getIt;
 
-Future<void> main() async {
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  unawaited(
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]),
+  ); //this line is used for intailize the flutter framework
   unawaited(getIt.init());
-
-  GetTrending getTrending = getIt.getItInstance<GetTrending>();
-
-  final Either<AppError, List<MovieEntity>> eitherResponse =
-      await getTrending(NoParams());
-
-  eitherResponse.fold((l) => print("error"), (r) {
-    print("list of movies");
-    print(r);
-    return r;
-  });
-
-  runApp(MyApp());
+  runApp(MovieApp());
 }
 
-class MyApp extends StatelessWidget {
+class MovieApp extends StatelessWidget {
+  const MovieApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Movie App',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryColor: AppColor.vulcan,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+        textTheme: ThemeText.getTextTheme(),
       ),
-      home: Text("hi"),
+      home: HomeScreen(),
     );
   }
 }
+
+
+
