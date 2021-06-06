@@ -1,29 +1,27 @@
 import 'dart:ui';
 
 class ScreenUtil {
-  static ScreenUtil? _instance;
+  static late ScreenUtil _instance;
   static const int defaultWidth = 414;
   static const int defaultHeight = 896;
 
   /// Size of the phone in UI Design , px
-  late num uiWidthPx;
-  late num uiHeightPx;
+  num uiWidthPx = 0;
+  num uiHeightPx = 0;
 
   /// allowFontScaling Specifies whether fonts should scale to respect Text Size accessibility settings. The default is false.
   late bool allowFontScaling;
 
-  static double _screenWidth = 0;
-  static double _screenHeight = 0;
-  static double _pixelRatio = 0;
-  static double _statusBarHeight = 0;
-  static double _bottomBarHeight = 0;
-  static double _textScaleFactor = 0;
+  static late double _screenWidth;
+  static late double _screenHeight;
+  static late double _pixelRatio;
+  static late double _statusBarHeight;
+  static late double _bottomBarHeight;
+  static late double _textScaleFactor;
 
-  // ScreenUtil._();
-  //
-  // factory ScreenUtil() {
-  //   return _instance;
-  // }
+  factory ScreenUtil() {
+    return _instance;
+  }
 
   static void init(
       {num width = defaultWidth,
@@ -32,9 +30,9 @@ class ScreenUtil {
     if (_instance == null) {
       _instance = ScreenUtil();
     }
-    _instance!.uiWidthPx = width;
-    _instance!.uiHeightPx = height;
-    _instance!.allowFontScaling = allowFontScaling;
+    _instance.uiWidthPx = width;
+    _instance.uiHeightPx = height;
+    _instance.allowFontScaling = allowFontScaling;
     _pixelRatio = window.devicePixelRatio;
     _screenWidth = window.physicalSize.width;
     _screenHeight = window.physicalSize.height;
@@ -96,7 +94,7 @@ class ScreenUtil {
   ///Font size adaptation method
   ///@param [fontSize] The size of the font on the UI design, in px.
   ///@param [allowFontScaling]
-  num setSp(num fontSize, {bool? allowFontScalingSelf}) =>
+  num setSp(num fontSize,[ bool? allowFontScalingSelf]) =>
       allowFontScalingSelf == null
           ? (allowFontScaling
               ? (fontSize * scaleText)

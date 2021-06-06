@@ -1,12 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:movieapp/common/screenutil/screenutil.dart';
 import 'package:movieapp/presentation/journey/home_screen.dart';
 import 'package:movieapp/presentation/themes/app_color.dart';
 import 'package:movieapp/presentation/themes/theme_text.dart';
 import 'package:pedantic/pedantic.dart';
 
-import 'di/get_it.dart' as getIt;
+import 'dependencyinjection_loctor/get_it.dart' as getIt;
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,6 +23,7 @@ class MovieApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -33,6 +35,3 @@ class MovieApp extends StatelessWidget {
     );
   }
 }
-
-
-
