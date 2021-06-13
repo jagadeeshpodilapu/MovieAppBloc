@@ -4,6 +4,7 @@ import 'package:movieapp/data/core/api_client.dart';
 import 'package:movieapp/data/data_sources/movie_remote_data_sources.dart';
 import 'package:movieapp/data/repository/movie_repository_impl.dart';
 import 'package:movieapp/domain/repository/movie_repository.dart';
+import 'package:movieapp/presentation/bloc/movie_backdrop/movie_backdrop_bloc.dart';
 import 'package:movieapp/presentation/bloc/movie_corousel/movie_carousel_bloc.dart';
 import 'package:movieapp/usecases/get_comingsoon.dart';
 import 'package:movieapp/usecases/get_playingnow.dart';
@@ -32,7 +33,9 @@ Future init() async {
       () => MovieRepositoryImpl(remoteDataSource: getItInstance()));
   getItInstance.registerFactory(() => MovieCarouselBloc(
         getTrending: getItInstance(),
+    movieBackdropBloc: getItInstance()
       ));
+  getItInstance.registerFactory(() => MovieBackdropBloc());
 
   ///new instance for bloc
 }
